@@ -54,4 +54,4 @@ app.listen(process.env.PORT || 5000,()=>{
 })
 
 // public Folder set static
-app.use(Express.static(__dirname+'/public'))
+// app.use(Express.static(__dirname+'/public'))

@@ -23,9 +23,16 @@ router.post('/',(req,res)=>{
           console.log('User Created')   
           res.send('User Created')
      })
-     .catch(Err=>{
-          console.log(Err)
-          res.send(Err)
+     .catch(err=>{
+          if(err.keyValue){
+               console.log(err.keyValue)
+               res.send(`UserName ${err.keyValue.Username} is Already Register`)
+          }
+               else{
+                    res.send(err);
+                    console.log(err);
+                    
+               }
      })
      
 })

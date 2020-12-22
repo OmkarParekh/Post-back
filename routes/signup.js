@@ -9,7 +9,7 @@ router.post('/',(req,res)=>{
           Name:req.body.Name,
           Username:req.body.Username,
           Password:req.body.Password,
-          Phonenumber:req.body.Phonenumber||"",
+          Phonenumber:req.body.Phonenumber,
 
 
      }

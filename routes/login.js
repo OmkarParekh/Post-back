@@ -12,11 +12,11 @@ router.post('/',(req,res)=>{
      .then(login=>{
           if(login===null)
           {
-               res.sendStatus(401).send({
+               res.send({
                     "Status":'UnSuccess',
                     "data":'UnAuthorized'
                    
-               })
+               }).sendStatus(401)
           }
           else{
                jwt.sign({"Username":login.Username,"Password":login.Password},process.env.jwt_code,(err,tk)=>{

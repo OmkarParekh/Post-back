@@ -6,7 +6,7 @@ const Schema=mongoose.Schema;
 
 const UserSchema=new Schema({
    
-     Fullname:{
+     Name:{
           type:String,
           required:true
       },
@@ -20,14 +20,10 @@ const UserSchema=new Schema({
         required:true,
         
      },
-     Email:{
-          type:String,
-          required:false
-     },
      Phonenumber:{
         type:String,
         required:false,
-        unique:true
+       
     },
      
    

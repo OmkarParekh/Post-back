@@ -45,7 +45,7 @@ app.use('/Create',require('./routes/Add'))
 app.use('/lc',require('./routes/lc'))
 app.use('/delete',require('./routes/Delete'))
 app.use('/login',require('./routes/login'))
-app.use('/signup',require('./routes/sigin'))
+app.use('/signup',require('./routes/signup'))
 
 
 // Port

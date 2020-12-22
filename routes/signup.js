@@ -5,7 +5,14 @@ const conn=mongo.createConnection(process.env.mongo_conn,{ useNewUrlParser: true
 // require('../models/Usersigindata')
 // const User=conn.model('user')
 router.post('/',(req,res)=>{
-     const data=req.body
+     const data={
+          Name:req.body.Name,
+          Username:req.body.Username,
+          Password:req.body.Password,
+          Phonenumber:req.body.Phonenumber||"",
+
+
+     }
      
     require('../models/Usersigindata')
     const User=conn.model('user')
@@ -13,16 +20,8 @@ router.post('/',(req,res)=>{
      new User(data)
      .save()
      .then(()=>{
-          console.log('User Created')
-          jwt.sign({"Username":data.Username,"Password":data.Password},process.env.jwt_code,(err,tk)=>{
-               if(err) throw res.send(err)
-               res.send({
-                    "Status":"success",
-                   "token":tk
-               })
-               
-          })
-        
+          console.log('User Created')   
+          res.send('User Created')
      })
      .catch(Err=>{
           console.log(Err)

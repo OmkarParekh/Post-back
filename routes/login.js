@@ -2,7 +2,7 @@ const router=require('express').Router()
 const jwt=require('jsonwebtoken')
 const mongo=require('mongoose')
 const conn=mongo.createConnection(process.env.mongo_conn,{ useNewUrlParser: true,useUnifiedTopology: true})
-router.get('/',(req,res)=>{
+router.post('/',(req,res)=>{
      const data=req.body
      require('../models/Usersigindata')
      const User=conn.model('user')

@@ -23,6 +23,7 @@ router.post('/',(req,res)=>{
                     if(err) throw res.send(err)
                     res.send({
                         "token":tk,
+                        "data":login,
                         "Status":'Success'
                     })
                     // console.log(tk);

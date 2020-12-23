@@ -6,7 +6,7 @@ require('../models/post')
 const Post=mongo.model('post')
 
 
-router.post('/',Authentication,(req,res)=>{   
+router.post('/',(req,res)=>{   
      // // filename creation
      // let filename=`/uploads/${Date.now()}.jpg`
      // // Checking the post Photo 
@@ -39,7 +39,9 @@ router.post('/',Authentication,(req,res)=>{
      new Post(data)
      .save()
      .then(()=>{
-          res.send(data)
+          res.send({
+          data:'Post is created'
+          })
           console.log(data)
           console.log('Data Uploaded')
      })

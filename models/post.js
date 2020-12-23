@@ -34,7 +34,8 @@ const PostSchema=new Schema({
           {
                Likedbyname:{
                     type:String,
-                    required:true
+                    required:true,
+                    unique:true
                }
           }
      ],
@@ -42,7 +43,8 @@ const PostSchema=new Schema({
           {
                Name:{
                     type:String,
-                    required:true
+                    required:true,
+                    unique:true
                },
                Comment:{
                     type:String,

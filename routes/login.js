@@ -22,9 +22,10 @@ router.post('/',(req,res)=>{
                jwt.sign({"Username":login.Username,"Password":login.Password},process.env.jwt_code,(err,tk)=>{
                     if(err) throw res.send(err)
                     res.send({
-                        "token":tk,
-                        "data":login,
-                        "Status":'Success'
+                        token:tk,
+                        Name:login.Name,
+                        Username:login.Username,
+                        Status:'Success'
                     })
                     // console.log(tk);
                     

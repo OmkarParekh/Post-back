@@ -70,7 +70,7 @@ router.post('/unlike/:id/:name',(req,res)=>{
        
         Post.updateOne({'_id':req.params.id},{$inc:{'Likes':-1}})
         .then((s)=>{
-            console.log(s);
+            // console.log(s);
             if(s.nModified===0){
                 res.send('Some Error Cause')
                 

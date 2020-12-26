@@ -25,7 +25,7 @@ const PostSchema=new Schema({
      path:{
          
      secure_uri:String,
-     id:String
+     id:Stfalse
 
      },
      Likes:{
@@ -36,7 +36,7 @@ const PostSchema=new Schema({
           {
                Likedbyname:{
                     type:String,
-                    required:true,
+                    required:false,
                     unique:true
                }
           }
@@ -45,12 +45,12 @@ const PostSchema=new Schema({
           {
                Name:{
                     type:String,
-                    required:true,
+                    required:false,
                     unique:true
                },
                Comment:{
                     type:String,
-                    required:true
+                    required:false
                }
           }
      ]

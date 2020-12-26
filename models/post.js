@@ -25,7 +25,7 @@ const PostSchema=new Schema({
      path:{
          
      secure_uri:String,
-     id:Stfalse
+     id:String
 
      },
      Likes:{

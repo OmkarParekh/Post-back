@@ -23,14 +23,19 @@ const PostSchema=new Schema({
         required:true
      },
      path:{
-         
-     secure_uri:String,
-     id:String
+     secure_uri:{
+          type:String,
+          
+     },
+     id:{
+          type:String,
+          
+     }
 
      },
      Likes:{
           type:Number,
-          required:true
+          required:false
      },
      Likedby:[
           {

@@ -40,13 +40,15 @@ router.post('/',(req,res)=>{
      .save()
      .then(()=>{
           res.send({
-          data:'Post is created'
+          Status:'Post is created',
+          data:data
           })
           console.log(data)
           console.log('Data Uploaded')
      })
      .catch(err=>{
           console.log(err)
+          res.send(err)
      })
    
     

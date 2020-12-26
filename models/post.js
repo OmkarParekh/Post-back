@@ -23,14 +23,9 @@ const PostSchema=new Schema({
         required:true
      },
      path:{
-     secure_uri:{
-          type:String,
-          required:true
-     },
-     id:{
-          type:String,
-          required:true
-     }
+         
+     secure_uri:String,
+     id:String
 
      },
      Likes:{

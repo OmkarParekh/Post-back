@@ -38,12 +38,12 @@ router.post('/',(req,res)=>{
      // Data submiting to mongo with the help of Models
      new Post(data)
      .save()
-     .then(()=>{
+     .then((d)=>{
           res.send({
           Status:'Post is created',
-          data:data
+          data:d
           })
-          console.log(data)
+          console.log(d)
           console.log('Data Uploaded')
      })
      .catch(err=>{

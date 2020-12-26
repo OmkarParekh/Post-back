@@ -30,13 +30,13 @@ const PostSchema=new Schema({
      },
      Likes:{
           type:Number,
-          required:false
+          required:true
      },
      Likedby:[
           {
                Likedbyname:{
                     type:String,
-                    required:false,
+                    required:true,
                     unique:true
                }
           }
@@ -45,12 +45,12 @@ const PostSchema=new Schema({
           {
                Name:{
                     type:String,
-                    required:false,
+                    required:true,
                     unique:true
                },
                Comment:{
                     type:String,
-                    required:false
+                    required:true
                }
           }
      ]

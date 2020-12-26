@@ -30,9 +30,8 @@ router.post('/',(req,res)=>{
           Username:req.body.Username,
           Date:req.body.Date,
           path:req.body.path,
-          Likes:0,
-          Likedby:[],
-          Comments:[]
+          Likes:0
+        
      }
      // res.send('hello')
     

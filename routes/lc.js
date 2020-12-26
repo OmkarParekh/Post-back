@@ -24,31 +24,73 @@ router.post('/likeornot/:id/:name',(req,res)=>{
   })
 })
 
-router.post('/like/:id/:Name',(req,res)=>{
+router.post('/like/:id/:Name',async (req,res)=>{
     // Name of the person who liked
-    const likedby={
-        Likedbyname:req.params.Name
-    }
-    // submit to mongodb
-    Post.updateOne({'_id':req.params.id},{$push:{'Likedby':likedby}})
-    .then(()=>{
-      console.log('like done')
-        // find the id 
-        Post.find({'_id':req.params.id})
-        .then(res=>{
-        // find Likedby length
-        console.log(res[0].Likedby)
-        const len=res[0].Likedby.length
-        console.log(len)
-        // Submit the Length to mongodb
-        Post.updateOne({'_id':req.params.id},{$set:{'Likes':res[0].Likedby.length}})
+   
+  
+    // // submit to mongodb
+
+        Post.updateOne({'_id':req.params.id},{$addToSet:{'Likedby':req.params.Name}})
+        .then(()=>{
+        console.log('like done')
+        Post.updateOne({'_id':req.params.id},{$inc:{'Likes':+1}})
+            .then((s)=>{
+               
+                if(s.nModified===0)
+                {
+                    res.send('Some Error Cause')
+                    
+                }
+                else{
+                    res.send('Liked')
+                    console.log('inc');
+                }
+                
+               
+            })
+            .catch(err=>{
+                console.log(err);
+                res.send(err)
+            })
+        })
         .catch(err=>{
             console.log(err)
         }) 
-    })
-    })
+           
+       
+       
+   
+   
     
   
+})
+router.post('/unlike/:id/:name',(req,res)=>{
+    Post.updateOne({'_id':req.params.id},{$pull:{'Likedby':req.params.name}})
+    .then(()=>{
+       
+        Post.updateOne({'_id':req.params.id},{$inc:{'Likes':-1}})
+        .then((s)=>{
+            console.log(s);
+            if(s.nModified===0){
+                res.send('Some Error Cause')
+                
+            }
+            else{
+                res.send('Unliked and Dec')
+            }
+           
+           
+        })
+        .catch(err=>{
+            res.send(err)
+            console.log(err);
+        })
+        
+    })
+    .catch(err=>{
+        res.send(err)
+        console.log(err);
+    })
 })
 router.post('/comments/:id/:Name/:Comment',(req,res)=>{
      const data={

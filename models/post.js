@@ -37,15 +37,7 @@ const PostSchema=new Schema({
           type:Number,
           required:false
      },
-     Likedby:[
-          {
-               Likedbyname:{
-                    type:String,
-                    required:true,
-                    unique:true
-               }
-          }
-     ],
+     Likedby:[String],
      Comments:[
           {
                Name:{

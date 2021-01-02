@@ -6,12 +6,11 @@ const conn=mongo.createConnection(process.env.mongo_conn,{ useNewUrlParser: true
 // const User=conn.model('user')
 router.post('/',(req,res)=>{
      const data={
+          uid:req.body.uid,
+          photo:req.body.photo,
           Name:req.body.Name,
-          Username:req.body.Username,
-          Password:req.body.Password,
-          Phonenumber:req.body.Phonenumber,
-
-
+          email:req.body.email, 
+          password:req.body.password
      }
      
     require('../models/Usersigindata')

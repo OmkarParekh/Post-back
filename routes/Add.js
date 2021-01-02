@@ -4,9 +4,11 @@ const jwt=require('jsonwebtoken')
 mongo.connect(process.env.mongo_conn,{useNewUrlParser: true,useUnifiedTopology: true })
 require('../models/post')
 const Post=mongo.model('post')
+const {CreatepostAuth,NormalAuth}=require('../Authentication/authenroute')
 
 
-router.post('/',(req,res)=>{   
+router.post('/',CreatepostAuth,(req,res)=>{   
+     console.log(req.userdata);
      // // filename creation
      // let filename=`/uploads/${Date.now()}.jpg`
      // // Checking the post Photo 
@@ -27,7 +29,9 @@ router.post('/',(req,res)=>{
      const data={
           Postname:req.body.Postname,
           Description:req.body.Description,
-          Username:req.body.Username,
+          Uphoto:req.userdata.Uphoto,
+          UName:req.userdata.UName,
+          uid:req.userdata.uid,
           Date:req.body.Date,
           path:req.body.path,
           Likes:0
@@ -62,7 +66,7 @@ storage:multer.diskStorage({limits: {
      fileSize: 1000000,
      },})
 })
-router.post('/upload',upload.single('file'),async (req,res)=>{
+router.post('/upload',NormalAuth,upload.single('file'),async (req,res)=>{
 //   console.log('hello');
 //   res.send(req.file)
   if(req.file)

@@ -3,34 +3,15 @@ const mongo=require('mongoose')
 const conn=mongo.createConnection(process.env.mongo_conn,{ useNewUrlParser: true,useUnifiedTopology: true})
 require('../models/post')
 const Post=conn.model('post')
+const {likeAuth,NormalAuth,commentAuth}=require('../Authentication/authenroute')
 
-router.post('/likeornot/:id/:name',(req,res)=>{
-  const name=req.params.name
-  
-  Post.findOne({_id:req.params.id})
-  .then(data=>{
-     data.Likedby.map((item)=>{
-         if(item.Likedbyname===name){
-             res.send({
-                 data:`Liked`
-             })
-         }
-    })
-    res.send({
-        data:'notLike'
-    })
-    
-    
-  })
-})
-
-router.post('/like/:id/:Name',async (req,res)=>{
+router.post('/like/:id',likeAuth,async (req,res)=>{
     // Name of the person who liked
    
   
     // // submit to mongodb
 
-        Post.updateOne({'_id':req.params.id},{$addToSet:{'Likedby':req.params.Name}})
+        Post.updateOne({'_id':req.params.id},{$addToSet:{'Likedby':req.userdata.email}})
         .then(()=>{
         console.log('like done')
         Post.updateOne({'_id':req.params.id},{$inc:{'Likes':+1}})
@@ -64,8 +45,8 @@ router.post('/like/:id/:Name',async (req,res)=>{
     
   
 })
-router.post('/unlike/:id/:name',(req,res)=>{
-    Post.updateOne({'_id':req.params.id},{$pull:{'Likedby':req.params.name}})
+router.post('/unlike/:id',likeAuth,(req,res)=>{
+    Post.updateOne({'_id':req.params.id},{$pull:{'Likedby':req.userdata.email}})
     .then(()=>{
        
         Post.updateOne({'_id':req.params.id},{$inc:{'Likes':-1}})
@@ -92,9 +73,10 @@ router.post('/unlike/:id/:name',(req,res)=>{
         console.log(err);
     })
 })
-router.post('/comments/:id/:Name/:Comment',(req,res)=>{
+router.post('/comments/:id/:Comment',commentAuth,(req,res)=>{
      const data={
-          Name:req.params.Name,
+            email:req.userdata.email,
+          Name:req.userdata.Name,
           Comment:req.params.Comment
          
      }
@@ -106,7 +88,7 @@ router.post('/comments/:id/:Name/:Comment',(req,res)=>{
         res.send(err)
     })
 })
-router.post('/deletecomments/:id/:cid/',(req,res)=>{
+router.post('/deletecomments/:id/:cid/',NormalAuth,(req,res)=>{
     
     Post.updateOne({'_id':req.params.id},{$pull:{'Comments':{'_id':req.params.cid}}})
     .then((d)=>{
@@ -117,7 +99,7 @@ router.post('/deletecomments/:id/:cid/',(req,res)=>{
         res.send(err)
     })
 })
-router.get('/getcomments/:id',(req,res)=>{
+router.get('/getcomments/:id',NormalAuth,(req,res)=>{
     Post.findOne({_id:req.params.id})
     .then(data=>{
         console.log(data);

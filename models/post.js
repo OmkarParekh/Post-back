@@ -8,13 +8,21 @@ const PostSchema=new Schema({
    
      Postname:{
           type:String,
-          required:true
+          required:false
      },
      Description:{
         type:String,
-        required:true
+        required:false
      },
-     Username:{
+     Uphoto:{
+          type:String,
+          required:true
+     },
+     UName:{
+          type:String,
+          required:true
+     },
+     uid:{
           type:String,
           required:true
      },
@@ -40,6 +48,11 @@ const PostSchema=new Schema({
      Likedby:[String],
      Comments:[
           {
+               email:{
+                    type:String,
+                    required:true,
+                    unique:true
+               },
                Name:{
                     type:String,
                     required:true,

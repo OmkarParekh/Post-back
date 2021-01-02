@@ -12,27 +12,34 @@ router.post('/like/:id',likeAuth,async (req,res)=>{
     // // submit to mongodb
 
         Post.updateOne({'_id':req.params.id},{$addToSet:{'Likedby':req.userdata.email}})
-        .then(()=>{
-        console.log('like done')
-        Post.updateOne({'_id':req.params.id},{$inc:{'Likes':+1}})
-            .then((s)=>{
-               
-                if(s.nModified===0)
-                {
-                    res.send('Some Error Cause')
-                    
-                }
-                else{
-                    res.send('Liked')
-                    console.log('inc');
-                }
-                
-               
-            })
-            .catch(err=>{
-                console.log(err);
-                res.send(err)
-            })
+        .then((s1)=>{
+            if(s1.nModified===0)
+            {
+               res.send('Some error Cauase') 
+            }
+            else{
+                console.log('like done')
+                Post.updateOne({'_id':req.params.id},{$inc:{'Likes':+1}})
+                    .then((s)=>{
+                       
+                        if(s.nModified===0)
+                        {
+                            res.send('Some Error Cause')
+                            
+                        }
+                        else{
+                            res.send('Liked')
+                            console.log('inc');
+                        }
+                        
+                       
+                    })
+                    .catch(err=>{
+                        console.log(err);
+                        res.send(err)
+                    })
+            }
+        
         })
         .catch(err=>{
             console.log(err)
@@ -47,25 +54,31 @@ router.post('/like/:id',likeAuth,async (req,res)=>{
 })
 router.post('/unlike/:id',likeAuth,(req,res)=>{
     Post.updateOne({'_id':req.params.id},{$pull:{'Likedby':req.userdata.email}})
-    .then(()=>{
-       
-        Post.updateOne({'_id':req.params.id},{$inc:{'Likes':-1}})
-        .then((s)=>{
-            // console.log(s);
-            if(s.nModified===0){
-                res.send('Some Error Cause')
-                
-            }
-            else{
-                res.send('Unliked and Dec')
-            }
-           
-           
-        })
-        .catch(err=>{
-            res.send(err)
-            console.log(err);
-        })
+    .then((s0)=>{
+        if(s0.nModified===0){
+            res.send('Some Error Cause')
+            
+        }
+        else{
+            Post.updateOne({'_id':req.params.id},{$inc:{'Likes':-1}})
+            .then((s)=>{
+                // console.log(s);
+                if(s.nModified===0){
+                    res.send('Some Error Cause')
+                    
+                }
+                else{
+                    res.send('Unliked and Dec')
+                }
+               
+               
+            })
+            .catch(err=>{
+                res.send(err)
+                console.log(err);
+            })
+        }
+        
         
     })
     .catch(err=>{

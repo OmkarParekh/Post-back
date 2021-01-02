@@ -15,7 +15,7 @@ router.post('/like/:id',likeAuth,async (req,res)=>{
         .then((s1)=>{
             if(s1.nModified===0)
             {
-               res.send('Some error Cauase') 
+               res.send('Error') 
             }
             else{
                 console.log('like done')
@@ -56,7 +56,7 @@ router.post('/unlike/:id',likeAuth,(req,res)=>{
     Post.updateOne({'_id':req.params.id},{$pull:{'Likedby':req.userdata.email}})
     .then((s0)=>{
         if(s0.nModified===0){
-            res.send('Some Error Cause')
+            res.send('Error')
             
         }
         else{

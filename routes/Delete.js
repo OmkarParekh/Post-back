@@ -8,20 +8,6 @@ router.post('/:id',Authentication,(req,res)=>{
      Post.findOneAndDelete({'_id':req.params.id})
      .then(res=>{
           console.log('Post Deleted')
-          if(res.path==='It is just written Post')
-          {
-
-          }
-          else{
-               fs.unlink(res.path, (err) => {
-                    if (err) {
-                      console.error(err)
-                      return
-                    }
-                  
-                    
-                  })
-          }
           res.send({
                'status':'Post Deleted'
           })

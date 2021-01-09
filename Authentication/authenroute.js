@@ -66,6 +66,40 @@ const NormalAuth=(req,res,next)=>{
           res.send('UnAuthorized')
      }    
 }
+const withprofileAuth=(req,res,next)=>{
+     if(req.header("Authorization")){
+          const token = req.header("Authorization").split(" ")[1];
+          // console.log(token);
+          if(token===undefined){
+               res.send('Please Provide Token')
+          }
+          else{
+               const data = jwt.verify(token, process.env.jwt_code);
+          OUser.findOne({uid:data.uid})
+          .then(Response=>{
+               if(Response===null){
+                    res.send('UnAuthorized')
+               }
+               else{
+                    req.userdata={
+                         Uphoto:Response.photo,
+                         UName:Response.Name,
+                         uid:Response.uid,
+                         email:Response.email,
+                         description:'For Developement Purpose'
+                    }
+                    next()
+               }              
+          })  
+          .catch(err=>{
+               console.log(err);
+          })
+          }
+     }
+     else{
+          res.send('UnAuthorized')
+     }    
+}
 
 const commentAuth=(req,res,next)=>{
      if(req.header("Authorization")){
@@ -142,7 +176,8 @@ module.exports ={
                CreatepostAuth,
                commentAuth,
                NormalAuth,
-               likeAuth
+               likeAuth,
+               withprofileAuth
           };
 
 

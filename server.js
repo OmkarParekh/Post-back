@@ -49,6 +49,8 @@ app.use('/lc',require('./routes/lc'))
 app.use('/delete',require('./routes/Delete'))
 // app.use('/login',require('./routes/login'))
 app.use('/oauth',require('./routes/oauth'))
+app.use('/update',require('./routes/Postupdate'))
+app.use('/post',require('./routes/singlepost'))
 
 
 

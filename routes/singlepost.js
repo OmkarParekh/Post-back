@@ -5,15 +5,12 @@ require('../models/post')
 const Post=conn.model('post')
 const {NormalAuth}=require('../Authentication/authenroute')
 
-router.post('/:id',NormalAuth,(req,res)=>{
-     const data=req.body
-     Post.findOneAndUpdate({_id:req.params.id},{
-          Postname:data.Postname,
-          Description:data.Description,
-          Date:data.Date
-     })
+router.get('/:id',NormalAuth,(req,res)=>{
+    
+     Post.findOne({_id:req.params.id})
      .then(data=>{
           res.send(data)
      })
 })
+
 module.exports=router;

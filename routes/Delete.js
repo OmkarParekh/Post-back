@@ -1,12 +1,16 @@
 const router=require('express').Router()
-const fs=require('fs')
 const mongo=require('mongoose')
+const {NormalAuth}=require('../Authentication/authenroute')
 const conn=mongo.createConnection(process.env.mongo_conn,{ useNewUrlParser: true,useUnifiedTopology: true})
 require('../models/post')
-const Post=mongo.model('post')
-router.post('/:id',Authentication,(req,res)=>{
+const Post=conn.model('post')
+const cloudinary=require('cloudinary')
+router.post('/:id/:pid',NormalAuth,(req,res)=>{
      Post.findOneAndDelete({'_id':req.params.id})
-     .then(res=>{
+     .then(async ()=>{
+
+          const deleteimage=await cloudinary.uploader.destroy(req.params.pid,options={});
+
           console.log('Post Deleted')
           res.send({
                'status':'Post Deleted'
@@ -18,31 +22,3 @@ router.post('/:id',Authentication,(req,res)=>{
 module.exports=router;         
 
 
-function Authentication(req,res,nxt){
-
-     require('../models/Usersigindata')
-     const User=mongo.model('user')
-      
-     const token=req.header('auth-token')
-     if(!token) return res.sendStatus(401).send('Acess Denied')
-     console.log(token)
-     try{
-     const verify=jwt.verify(token,process.env.jwt_code);
-     const payload =verify;
-     console.log(payload)
-     try{
-     User.findOne({Username:payload.Username,Password:payload.Password})
-     nxt()
-     }
-     catch(err){
-     res.sendStatus(401)
-     }
-     
-     
-     }
-     catch(err){
-     res.sendStatus(401).send(err)
-     }
-          
-     
-     }

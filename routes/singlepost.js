@@ -5,7 +5,7 @@ require('../models/post')
 const Post=conn.model('post')
 const {NormalAuth}=require('../Authentication/authenroute')
 
-router.get('/:id',NormalAuth,(req,res)=>{
+router.get('/:id',(req,res)=>{
     
      Post.findOne({_id:req.params.id})
      .then(data=>{

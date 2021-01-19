@@ -37,7 +37,8 @@ router.post('/',(req,res)=>{
                          token:token,
                          Name:data.Name,
                          email:data.email,
-                         photo:data.photo
+                         photo:data.photo,
+                       
 
 
                     })      
@@ -48,37 +49,6 @@ router.post('/',(req,res)=>{
      })
 
 })
-router.post('/email',(req,res)=>{
-     const data={
-          uid:req.body.uid,
-          photo:req.body.photo,
-          Name:req.body.Name,
-          email:req.body.email, 
-          password:req.body.password
-     }
-     GUser.findOne({uid:data.uid,email:data.email,password:data.password})
-     .then(r=>{
-          if(r===null){
-               res.send('UnAuthorized')
-          }
-          else{
 
-               const token= jwt.sign(data, process.env.jwt_code)
-                    res.send({
-                         status:'User Found',
-                         token:token,
-                         Name:data.Name,
-                         Username:data.email,
-                         photo:data.photo
-
-
-                    })      
-          }
-     })
-     .catch(err=>{
-          console.log(err);
-     })
-
-})
 
 module.exports=router;

@@ -3,11 +3,13 @@ const mongo=require('mongoose')
 const conn=mongo.createConnection(process.env.mongo_conn,{ useNewUrlParser: true,useUnifiedTopology: true})
 require('../models/post')
 const Post=conn.model('post')
-const {NormalAuth}=require('../Authentication/authenroute')
+const {postupdateauth}=require('../Authentication/authenroute')
 
-router.post('/:id',NormalAuth,(req,res)=>{
+router.post('/:id',postupdateauth,(req,res)=>{
      const data=req.body
-     Post.findOneAndUpdate({_id:req.params.id},{
+     const user=req.userdata.uid
+     
+     Post.findOneAndUpdate({_id:req.params.id,uid:user},{
           Postname:data.Postname,
           Description:data.Description,
           Date:data.Date

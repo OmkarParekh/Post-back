@@ -90,7 +90,7 @@ router.post('/comments/:id/:Comment',commentAuth,(req,res)=>{
      const data={
             email:req.userdata.email,
           Name:req.userdata.Name,
-          Comment:req.params.Comment
+          Comment:req.body.Comment
          
      }
     Post.updateOne({'_id':req.params.id},{$push:{'Comments':data}})

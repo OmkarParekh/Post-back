@@ -18,9 +18,9 @@ router.post('/:id',postupdateauth,(req,res)=>{
           res.send(data)
      })
 })
-router.get('/fetch/:id',NormalAuth,(req,res)=>{
+router.get('/fetch/:id',postupdateauth,(req,res)=>{
     
-     Post.findOne({_id:req.params.id})
+     Post.findOne({_id:req.params.id,uid:user})
      .then(data=>{
           res.send(data)
      })

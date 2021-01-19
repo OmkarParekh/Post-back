@@ -86,7 +86,7 @@ router.post('/unlike/:id',likeAuth,(req,res)=>{
         console.log(err);
     })
 })
-router.post('/comments/:id/:Comment',commentAuth,(req,res)=>{
+router.post('/comments/:id',commentAuth,(req,res)=>{
      const data={
             email:req.userdata.email,
           Name:req.userdata.Name,
